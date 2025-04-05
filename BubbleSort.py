@@ -1,8 +1,8 @@
-arr = [42,35,12,77,54,101,5]
+arr = [6,3,5,7,2,4,8,11,21,3,14,9]
 
 def bubblrSort(arr):
     n = len(arr)
-    for j in range(n-1):
+    for j in range(n):
 
         swapped = False
         for i in range(n-j-1):
@@ -11,7 +11,7 @@ def bubblrSort(arr):
                 swapped = True
 
         if not swapped:
-            return
+            break
 
 bubblrSort(arr)
 print(arr)
