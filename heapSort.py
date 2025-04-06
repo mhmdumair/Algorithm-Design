@@ -19,7 +19,17 @@ def build_max_heap(a):
     for i in range(math.floor(n/2)-1,-1,-1):
         max_heapify(a,i,n)
 
+def heapSort(a):
+    build_max_heap(a)
+    for i in range(len(a)-1,0,-1):
+        a[0],a[i] = a[i],a[0]
+        max_heapify(a,0,i-1)
+
 print(a)
 build_max_heap(a)
 print(a)
+heapSort(a)
+print(a)
+
+
 
