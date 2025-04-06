@@ -14,5 +14,12 @@ def max_heapify(a,i,n):
         a[i],a[largest] = a[largest],a[i]
         max_heapify(a,largest,n)
 
+def build_max_heap(a):
+    n = len(a)
+    for i in range(math.floor(n/2)-1,-1,-1):
+        max_heapify(a,i,n)
 
+print(a)
+build_max_heap(a)
+print(a)
 
