@@ -21,7 +21,6 @@ def partition(array, p, r):
     # Return the pivot index
     return i + 1
 
-# Example usage:
 arr = [6, 3, 5, 7, 2, 4, 8, 11, 21, 3, 14, 9]
 print("Before sorting:", arr)
 quickSort(arr, 0, len(arr) - 1)
