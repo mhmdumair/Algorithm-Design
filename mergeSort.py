@@ -1,19 +1,12 @@
 a = [6,3,5,7,2,4,8,11,21,3,14,9]
 def mergeSort(a):
-
     if len(a)<=1:
         return
-
     mid = len(a) // 2
     left = a[:mid]
     right = a[mid:]
-
-    # merge sort left
     mergeSort(left)
-
-    # merge sort right
     mergeSort(right)
-
     i = j = k = 0
     while i < len(left) and j < len(right):
         if left[i] < right[j]:

@@ -5,12 +5,10 @@ def quickSort(array, p, r):
         # Recursively sort elements before and after partition
         quickSort(array, p, q - 1)
         quickSort(array, q + 1, r)
-
 def partition(array, p, r):
     # Choose the rightmost element as pivot
     pivot = array[r]
     i = p - 1  # Pointer for the greater element
-
     # Traverse through all elements
     for j in range(p, r):
         if array[j] <= pivot:
@@ -20,7 +18,6 @@ def partition(array, p, r):
 
     # Swap the pivot element with the greater element at i+1
     array[i + 1], array[r] = array[r], array[i + 1]
-
     # Return the pivot index
     return i + 1
 
