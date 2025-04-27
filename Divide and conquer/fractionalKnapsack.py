@@ -17,7 +17,12 @@ def fractionalKnapsack(items,W):
     return totalValue
 
 
-print(fractionalKnapsack([Item(1, 200),
-                          Item(3, 240),
-                          Item(2, 140),
-                          Item(5, 150)], 6))
+print(fractionalKnapsack([Item(3, 5),
+                          Item(5, 8),
+                          Item(2, 3),
+                          Item(4, 6),
+                          Item(6, 9),
+                          Item(7, 10),
+                          Item(5, 7),
+                          Item(3, 4)
+                          ], 15))
