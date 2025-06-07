@@ -1,32 +1,47 @@
-arr = [0.3,-0.2,0.4,-0.1,-0.2,0.5,-0.3,0.6]
+def maxCrossingSum(arr, low, mid, high):
+    left_sum = float('-inf')
+    total = 0
+    max_left = mid
 
-def maxCrossSum(arr,low,mid,high):
-    leftSum = -1000000
-    rightSum = -1000000
+    for i in range(mid, low - 1, -1):
+        total += arr[i]
+        if total > left_sum:
+            left_sum = total
+            max_left = i
 
-    sum =0
-    for i in range(mid,low-1,-1):
-        sum+=arr[i]
-        if sum>leftSum:
-            leftSum = sum
+    right_sum = float('-inf')
+    total = 0
+    max_right = mid + 1
 
-    sum = 0
-    for i in range(mid+1,high+1):
-        sum+=arr[i]
-        if sum>rightSum:
-            rightSum = sum
+    for i in range(mid + 1, high + 1):
+        total += arr[i]
+        if total > right_sum:
+            right_sum = total
+            max_right = i
 
-    return leftSum + rightSum
+    return (left_sum + right_sum, max_left, max_right)
 
-def maxSubArraySum(arr,low,high):
+
+def maxSubArraySum(arr, low, high):
     if low == high:
-        return arr[low]
-    mid = (low+high)//2
-    lss = maxSubArraySum(arr,low,mid)
-    rss = maxSubArraySum(arr,mid+1,high)
-    css = maxCrossSum(arr,low,mid,high)
+        return (arr[low], low, high)
 
-    return max(lss,rss,css)
+    mid = (low + high) // 2
+
+    left_sum, left_low, left_high = maxSubArraySum(arr, low, mid)
+    right_sum, right_low, right_high = maxSubArraySum(arr, mid + 1, high)
+    cross_sum, cross_low, cross_high = maxCrossingSum(arr, low, mid, high)
+
+    if left_sum >= right_sum and left_sum >= cross_sum:
+        return (left_sum, left_low, left_high)
+    elif right_sum >= left_sum and right_sum >= cross_sum:
+        return (right_sum, right_low, right_high)
+    else:
+        return (cross_sum, cross_low, cross_high)
 
 
-print(maxSubArraySum(arr, 0, len(arr) - 1))
+arr = [-10, 5, 3, -4, 2, -3, 7, 1, 2, -5]
+max_sum, start, end = maxSubArraySum(arr, 0, len(arr) - 1)
+print("Maximum subarray sum:", max_sum)
+print("Subarray indices:", start, "to", end)
+print("Subarray:", arr[start:end + 1])

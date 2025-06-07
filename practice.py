@@ -1,91 +1,80 @@
-arr = [4, 1, 2, 1, 4, 5, 8, 9, 6, 12, 14, 54, 11, 16, 13]
+def maxCrossingSum(arr, low, mid, high):
+    left_sum = float('-inf')
+    total = 0
+    max_left = mid
 
+    for i in range(mid, low - 1, -1):
+        total += arr[i]
+        if total > left_sum:
+            left_sum = total
+            max_left = i
 
-def bubbleSort(arr):
-    n = len(arr)
-    for i in range(n - 1):
-        swapped = False
-        for j in range(n - 1 - i):
-            if arr[j] > arr[j + 1]:
-                arr[j], arr[j + 1] = arr[j + 1], arr[j]
-                swapped = True
-        if swapped == False:
-            break
+    right_sum = float('-inf')
+    total = 0
+    max_right = mid + 1
 
+    for i in range(mid + 1, high + 1):
+        total += arr[i]
+        if total > right_sum:
+            right_sum = total
+            max_right = i
 
-def insertionSort(arr):
-    n = len(arr)
-    for i in range(1,n):
-        temp = arr[i]
-        j = i-1
-        while j>=0 and arr[j]>temp:
-            arr[j+1] = arr[j]
-            j-=1
-        arr[j+1] = temp
+    return (left_sum + right_sum, max_left, max_right)
 
+def maxSubArraySum(arr, low, high):
+    if low == high:
+        return (arr[low], low, high)
 
-def max_heapify(arr,i,n):
-    l = 2 * i + 1
-    r = 2*i +2
-    largest = i
-    if l < n and arr[l] > arr[largest]:
-        largest = l
-    if r < n and arr[r]>arr[largest]:
-        largest = r
-    if largest != i:
-        arr[i],arr[largest] = arr[largest],arr[i]
-        max_heapify(arr,largest,n)
+    mid = (low + high) // 2
 
-def build_max_heap(arr):
-    n = len(arr)
-    for i in range(n//2-1,-1,-1):
-        max_heapify(arr,i,n)
+    left_sum, left_low, left_high = maxSubArraySum(arr, low, mid)
+    right_sum, right_low, right_high = maxSubArraySum(arr, mid + 1, high)
+    cross_sum, cross_low, cross_high = maxCrossingSum(arr, low, mid, high)
 
-def hep_Sort(arr):
-    build_max_heap(arr)
-    n = len(arr)
-    for i in range(n-1,0,-1):
-        arr[i],arr[0] = arr[0],arr[i]
-        max_heapify(arr,0,i)
-
-def mergeSort(arr):
-    n = len(arr)
-    mid = n//2
-    l = arr[:mid]
-    r = arr[mid:]
-
-    if len(arr)<=1:
-        return
-
-    mergeSort(l)
-    mergeSort(r)
-
-    i=j=k=0
-    while i<len(l) and j<len(r):
-        if l[i]<r[j]:
-            arr[k]=l[i]
-            i+=1
-        else:
-            arr[k]= r[j]
-            j+=1
-        k+=1
-
-    while i<len(l):
-        arr[k] = l[i]
-        k+=1
-        i+=1
-
-    while j<len(r):
-        arr[k] = r[j]
-        j+=1
-        k+=1
+    if left_sum >= right_sum and left_sum >= cross_sum:
+        return (left_sum, left_low, left_high)
+    elif right_sum >= left_sum and right_sum >= cross_sum:
+        return (right_sum, right_low, right_high)
+    else:
+        return (cross_sum, cross_low, cross_high)
 
 
 
 
-print(arr)
-# bubbleSort(arr)
-# insertionSort(arr)
-# hep_Sort(arr)
-mergeSort(arr)
-print(arr)
+arr = [-10, 5, 3, -4, 2, -3, 7, 1, 2, -5]
+max_sum, start, end = maxSubArraySum(arr, 0, len(arr) - 1)
+print("Maximum subarray sum:", max_sum)
+print("Subarray indices:", start, "to", end)
+print("Subarray:", arr[start:end+1])
+
+
+arr2 = sorted(arr)
+def binarySearch(arr,x,low,high):
+    mid = (low+high)//2
+    if arr[mid]==x:
+        return mid
+    if x<arr[mid]:
+        return binarySearch(arr,x,low,mid)
+    elif x > arr[mid]:
+        return binarySearch(arr,x,mid+1,high)
+    else:
+        return -1
+
+def binarySearchLoop(arr,x):
+    low = 0
+    high = len(arr)-1
+
+    while low<=high:
+        mid = (low+high) // 2
+        if arr[mid] == x:
+            return mid
+        elif x < arr[mid]:
+            high = mid-1
+        elif x > arr[mid]:
+            low = mid+1
+    return -1
+
+print(arr2)
+print(binarySearch(arr2, -4, 0, len(arr) - 1))
+print(binarySearchLoop(arr2, -4))
+
